@@ -51,8 +51,8 @@ function! ToggleRelativeAbsoluteNumber()
 endfunction
 
 " Set the relative number for default
-set number
-set relativenumber
+"set number
+"set relativenumber
 
 " }}}
 

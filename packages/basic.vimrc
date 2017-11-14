@@ -23,7 +23,7 @@ set lazyredraw                  " only redraws if it is needed
 set autoread                    " update a open file edited outside of Vim
 set ttimeoutlen=0               " toggle between modes almost instantly
 set backspace=indent,eol,start  " defines the backspace key behavior
-set virtualedit=all             " to edit where there is no actual character
+set virtualedit=block,insert    " to edit where there is no actual character
 set scrolloff=7                 " buffer when scrolling
 
 " Never goback to compatible mode
@@ -86,20 +86,24 @@ set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.jar                            " java archives
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.stats                          " Pylint stats
+set wildignore+=*.class
+set wildignore+=*.o
+set wildignore+=*.so
+set wildignore+=*.ko
 
 " }}}
 
 " Tabs, space and wrapping {{{
 
-set expandtab                  " spaces instead of tabs
-set tabstop=4                  " a tab = four spaces
-set shiftwidth=4               " number of spaces for auto-indent
-set softtabstop=4              " a soft-tab of four spaces
-set autoindent                 " set on the auto-indent
+"set expandtab                  " spaces instead of tabs
+"set tabstop=4                  " a tab = four spaces
+"set shiftwidth=4               " number of spaces for auto-indent
+"set softtabstop=4              " a soft-tab of four spaces
+"set autoindent                 " set on the auto-indent
 
 " set formatoptions=qrn1ct
-set textwidth=80
-set colorcolumn=81
+"set textwidth=80
+"set colorcolumn=81
 
 function! ToggleWrap()
     let s:nowrap_cc_bg = [22, '#005f00']
@@ -147,11 +151,11 @@ nmap <silent><Leader>ew :call ToggleWrap()<CR>
 syntax enable                  " enable the syntax highlight
 set background=dark            " set a dark background
 set t_Co=256                   " 256 colors for the terminal
-if has('gui_running')
-    colorscheme molokai
-else
-    colorscheme molokai256
-endif
+"if has('gui_running')
+"    colorscheme molokai
+"else
+"    colorscheme molokai256
+"endif
 
 " }}}
 
@@ -179,8 +183,8 @@ nnoremap <C-l> <C-w>l
 
 " Fast window & buffer close and kill {{{
 
-nnoremap <Leader>k <C-w>c
-nnoremap <silent><Leader>K :bd<CR>
+"nnoremap <Leader>k <C-w>c
+"nnoremap <silent><Leader>K :bd<CR>
 
 " }}}
 
@@ -212,7 +216,7 @@ nnoremap <silent> <Leader>q :ToggleQuickfix<CR>
 
 " Quick exiting without save {{{
 
-nnoremap <Leader>`` :qa!<CR>
+"nnoremap <Leader>`` :qa!<CR>
 
 " }}}
 
