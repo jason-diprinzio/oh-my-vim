@@ -54,7 +54,7 @@ call vundle#end()            " required
 :set ai                                 "auto indent
 :set is                                 "inc search
 
-:color desert                           "gvim color scheme
+":color desert                           "gvim color scheme
 :hi ColorColumn guibg=#4a4a4a ctermbg=250
 :set colorcolumn=120
 :hi CursorLine guibg=#4a4a4a ctermbg=0
@@ -559,20 +559,4 @@ let g:ConqueTerm_TERM = 'xterm'
 let g:ConqueTerm_ReadUnfocused = 1
 let g:ConqueTerm_InsertOnEnter = 0
 let g:ConqueTerm_SendVisKey = '<F9>'
-
- " Toggle the Quickfix window {{{
-function! s:QuickfixToggle()
-    for i in range(1, winnr('$'))
-        let bnum = winbufnr(i)
-        if getbufvar(bnum, '&buftype') == 'quickfix'
-            cclose
-            lclose
-            return
-        endif
-    endfor
-    copen
-endfunction
-command! ToggleQuickfix call <SID>QuickfixToggle()
-
-nnoremap <silent> <Leader>q :ToggleQuickfix<CR>
 
