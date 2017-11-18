@@ -182,9 +182,9 @@ function! MakeFile()
 endfunc
 
 "cpp settings
-:map <LEADER>gi :YcmCompleter GoToInclude<CR>
-:map <LEADER>gd :YcmCompleter GoToDefinition<CR>
-:map <LEADER>gc :YcmCompleter GoToDeclaration<CR>
+:map <LEADER>ji :YcmCompleter GoToInclude<CR>
+:map <LEADER>jd :YcmCompleter GoToDefinition<CR>
+:map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
 :map <LEADER>b :call g:ClangUpdateQuickFix()<CR>
 
 "let g:clang_library_path = '/usr/lib/llvm-3.8/lib/'

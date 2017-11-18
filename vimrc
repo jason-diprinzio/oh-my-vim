@@ -21,7 +21,7 @@ silent !sh $OH_MY_VIM/tools/check_for_upgrade.sh
 
 " Load external configuration before anything else {{{
 
-let s:before_vimrc = expand('~/.before.vimrc')
+let s:before_vimrc = expand($OH_MY_VIM.'/before.vimrc')
 if filereadable(s:before_vimrc)
     exec ':so ' . s:before_vimrc
 endif
@@ -129,7 +129,7 @@ call neobundle#end()
 
 " <Leader> & <LocalLeader> mapping {{{
 
-let mapleader=','
+let mapleader='\'
 let maplocalleader= ' '
 
 " }}}
@@ -279,7 +279,7 @@ let g:unite_source_directory_mru_time_format = '(%d-%m-%Y %H:%M:%S) '
 
 " Additional Configuration {{{
 
-let s:after_vimrc = expand('~/.after.vimrc')
+let s:after_vimrc = expand($OH_MY_VIM.'/after.vimrc')
 if filereadable(s:after_vimrc)
     exec ':so ' . s:after_vimrc
 endif
