@@ -54,12 +54,12 @@ call vundle#end()            " required
 :set ai                                 "auto indent
 :set is                                 "inc search
 
-":color desert                           "gvim color scheme
 :hi ColorColumn guibg=#4a4a4a ctermbg=250
 :set colorcolumn=120
 :hi CursorLine guibg=#4a4a4a ctermbg=0
 :hi Search guibg=#a4a4a4 ctermbg=27 ctermfg=250
 :hi IncSearch guibg=#a4a4a4 ctermbg=27 ctermfg=250
+:color molokai256                           "gvim color scheme
 
 ":set cin                                "use C style indentation
 :set fdm=indent
