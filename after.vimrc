@@ -54,6 +54,8 @@ call vundle#end()            " required
 :set ai                                 "auto indent
 :set is                                 "inc search
 
+":color desert                           "gvim color scheme
+:color molokai256
 :hi ColorColumn guibg=#4a4a4a ctermbg=250
 :set colorcolumn=120
 :hi CursorLine guibg=#4a4a4a ctermbg=0
@@ -111,7 +113,7 @@ call vundle#end()            " required
 :map <F3> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
 :map <C-F3> :cn<CR>
 :map <F4> :buffers<CR>
-:map <F5> :!ctags -R --exclude=*.js* --languages=C,C++,Erlang,Java,ObjectiveC,Perl,Vim,YACC<CR>
+:map <F5> :!ctags -R --exclude="*.js" --languages=C,C++,Erlang,Java,ObjectiveC,Perl,Vim,YACC<CR>
 :map <A-F5> :make -j10<CR>
 :map <S-F5> :make compile<CR>
 :map <LEADER><F5> :make -DskipTests=true
