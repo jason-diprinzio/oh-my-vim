@@ -171,6 +171,12 @@ autocmd Filetype c,h,c++,hpp compiler gcc
 autocmd Filetype erlang compiler erlang
 autocmd FileType java compiler maven
 
+"Java specific tags
+function! MakeJavaCtags()
+    :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
+    :set tags+=~/Projects/.jdk_tags
+endfunction
+
 "C/C++ specific tags
 function! MakeCppTags()
     :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
