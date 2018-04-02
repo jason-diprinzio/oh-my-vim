@@ -53,7 +53,7 @@ call vundle#end()            " required
 :set nocompatible                       "use vim not vi
 :set ai                                 "auto indent
 :set is                                 "inc search
-
+:set tags+=~/Projects/.jdk_tags         "additional tags
 ":color desert                           "gvim color scheme
 :color molokai256
 :hi ColorColumn guibg=#4a4a4a ctermbg=250
@@ -174,7 +174,6 @@ autocmd FileType java compiler maven
 "Java specific tags
 function! MakeJavaCtags()
     :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
-    :set tags+=~/Projects/.jdk_tags
 endfunction
 
 "C/C++ specific tags
