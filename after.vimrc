@@ -54,16 +54,14 @@ call vundle#end()            " required
 :set ai                                 "auto indent
 :set is                                 "inc search
 :set tags+=~/Projects/.jdk_tags         "additional tags
-":color desert                           "gvim color scheme
-:color molokai256
-:hi ColorColumn guibg=#4a4a4a ctermbg=250
+:hi ColorColumn guibg=#4a4a4a ctermbg=0
 :set colorcolumn=120
 :hi CursorLine guibg=#4a4a4a ctermbg=0
-:hi Search guibg=#a4a4a4 ctermbg=27 ctermfg=250
-:hi IncSearch guibg=#a4a4a4 ctermbg=27 ctermfg=250
-:color molokai256                           "gvim color scheme
+:hi Search guibg=#a4a4a4 ctermbg=27 ctermfg=0
+:hi IncSearch guibg=#a4a4a4 ctermbg=27 ctermfg=0
+:color molokai256                       "gvim color scheme
 
-":set cin                                "use C style indentation
+":set cin                               "use C style indentation
 :set fdm=indent
 "improve autocomplete menu color
 :highlight Pmenu cterm=None ctermbg=Blue ctermfg=White guibg=SlateBlue guifg=White
@@ -71,7 +69,7 @@ call vundle#end()            " required
 :highlight SignColumn ctermbg=Grey ctermfg=Black
 
 "Open this file
-:map vrc :e ~/.vimrc<CR>
+:map vrc :e ~/.oh-my-vim/after.vimrc<CR>
 "Delete current buffer
 :map <C-k> :bwipe!<CR>
 "Next buffer
@@ -93,14 +91,8 @@ call vundle#end()            " required
 "Internatshioanale!!!
 :imap <C-d><C-d> <C-R>='//$NON-NLS-1$'<CR>
 :map <LEADER>nls :call InsertNLS()<CR>
-"serial version for serializable
-:map <LEADER>svi :call Insert_svi()<CR>
 "DL url
 :vmap <LEADER>gu :call Get_Url()<CR>
-"Create new unit test from template
-:map <LEADER>nt :call NewUnitTest()<CR>
-"Add package name
-:map <LEADER>pn :call PackageName()<CR>
 "Add copyright
 :map <LEADER>acc :call Copyright()<CR>
 "Convert buffer to html
@@ -118,24 +110,33 @@ call vundle#end()            " required
 :map <S-F5> :make compile<CR>
 :map <LEADER><F5> :make -DskipTests=true
 :map mf :call MakeFile()<CR>
-:map <F6> :VCSDiff<CR>
-":map <S-F6> :!svn diff --diff-cmd=kdiff3 %<CR>
 :map <F7> :VCSBlame<CR>
 :map <LEADER><F7> :call ShowPatch()<CR>
-:map <F8> :call JavaSearchFromBufer()<CR>
-:map <LEADER><F8> :call JavaFindMethodInvocationsForIdentifier()<CR>
-:map fd :call JavaFindDerivatives()<CR>
 :map <F9> :call SearchCodeFromBuffer()<CR>
-:map <LEADER><F9> :JavaDocComment<CR>
-"Get java build path for maven projects
-:map <S-F10> :r! mvn dependency:build-classpath \| grep m2 \| tr ':' '\n' \| sort \| uniq \| tr '\n' ':'<CR>
 :map <F11> :set ignorecase!<CR>
 :map <LEADER><F12> :silent %!xmllint --encode UTF-8 --format -<CR>
 :map <LEADER><F11> :silent %!python -m json.tool<CR>
 
 "Java mappings
+"serial version for java serializable
+:map <LEADER>svi :call Insert_svi()<CR>
+:map <F8> :call JavaSearchFromBufer()<CR>
+:map <LEADER><F8> :call JavaFindMethodInvocationsForIdentifier()<CR>
+:map fd :call JavaFindDerivatives()<CR>
+:map <LEADER><F9> :JavaDocComment<CR>
+"Create new unit test from template
+:map <LEADER>nt :call NewUnitTest()<CR>
+"Add package name
+:map <LEADER>pn :call PackageName()<CR>
+"Get java build path for maven projects
+:map <S-F10> :r! mvn dependency:build-classpath \| grep m2 \| tr ':' '\n' \| sort \| uniq \| tr '\n' ':'<CR>
 autocmd FileType java setlocal cc=120
 autocmd WinEnter !java setlocal cc=-1
+"Java specific tags
+function! MakeJavaCtags()
+    :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
+endfunction
+"autocmd FileType java compiler mvn2
 "autocmd FileType java compiler ant
 "autocmd Filetype java set errorformat="\ %#[%.%#]\ %#%f:%l:%v:%*\\d:%*\\d:\ %t%[%^:]%#:%m, \%A\ %#[%.%#]\ %f:%l:\ %m,%-Z\ %#[%.%#]\ %p^,%C\ %#[%.%#]\ %#%m"
 
@@ -171,11 +172,6 @@ autocmd Filetype c,h,c++,hpp compiler gcc
 autocmd Filetype erlang compiler erlang
 autocmd FileType java compiler maven
 
-"Java specific tags
-function! MakeJavaCtags()
-    :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
-endfunction
-
 "C/C++ specific tags
 function! MakeCppTags()
     :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
@@ -188,7 +184,10 @@ function! MakeFile()
     unlet l:file
 endfunc
 
-"cpp settings
+"ycm settings
+let g:ycm_always_populate_location_list = 1
+:highlight YcmErrorLine guibg=#cf0000 ctermbg=1
+:highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
 :map <LEADER>ji :YcmCompleter GoToInclude<CR>
 :map <LEADER>jd :YcmCompleter GoToDefinition<CR>
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
