@@ -199,8 +199,10 @@ let g:clang_format#style_options = {
             \ "Cpp11BracedListStyle" : "true",
             \ "IndentWidth" : 3,
             \ "Standard" : "C++11"}
-"autocmd FileType c,cpp ClangFormatAutoEnable
-:vmap = :ClangFormat<CR>
+
+if &filetype ==# 'c' || &filetype ==# 'cpp'
+    :vmap = :ClangFormat<CR>
+endif
 
 "ycm settings
 let g:ycm_confirm_extra_conf = 0
