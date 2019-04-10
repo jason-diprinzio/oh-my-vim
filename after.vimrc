@@ -23,6 +23,8 @@ Plugin 'mileszs/ack.vim'
 Plugin 'mikelue/vim-maven-plugin'
 Plugin 'johngrib/vim-game-code-break'
 Plugin 'johngrib/vim-game-snake'
+Plugin 'rhysd/vim-clang-format' 
+Plugin 'kana/vim-operator-user'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -45,8 +47,8 @@ call vundle#end()            " required
 
 :syn on                                 "syntax highlighting
 :set expandtab                          "use spaces not tabs
-:set ts=4                               "tab stop.  number of spaces for tabs
-:set shiftwidth=4                       "indent spaces for auto format
+:set ts=3                               "tab stop.  number of spaces for tabs
+:set shiftwidth=3                       "indent spaces for auto format
 :set number                             "line numbers
 :set bg=dark                            "set background color
 :set hlsearch                           "highlight search
@@ -62,6 +64,7 @@ call vundle#end()            " required
 :color molokai256                       "gvim color scheme
 
 ":set cin                               "use C style indentation
+":setlocal cindent cino=j1,(0,ws,Ws
 :set fdm=indent
 "improve autocomplete menu color
 :highlight Pmenu cterm=None ctermbg=Blue ctermfg=White guibg=SlateBlue guifg=White
@@ -105,7 +108,7 @@ call vundle#end()            " required
 :map <F3> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
 :map <C-F3> :cn<CR>
 :map <F4> :buffers<CR>
-:map <F5> :!ctags -R --exclude="*.js" --languages=C,C++,Erlang,Java,ObjectiveC,Perl,Vim,YACC<CR>
+:map <F5> :!ctags -R --exclude="*.js" <CR>
 :map <A-F5> :make -j10<CR>
 :map <S-F5> :make compile<CR>
 :map <LEADER><F5> :make -DskipTests=true
@@ -184,19 +187,37 @@ function! MakeFile()
     unlet l:file
 endfunc
 
+"clang-format settings
+let g:clang_format#code_style='llvm'
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -3,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "false",
+            \ "BreakBeforeBraces" : "Stroustrup",
+            \ "ColumnLimit" : 0,
+            \ "ContinuationIndentWidth" : 3,
+            \ "Cpp11BracedListStyle" : "true",
+            \ "IndentWidth" : 3,
+            \ "Standard" : "C++11"}
+"autocmd FileType c,cpp ClangFormatAutoEnable
+:vmap = :ClangFormat<CR>
+
 "ycm settings
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_always_populate_location_list = 1
+let g:ycm_enable_diagnostic_signs = 1
+let g:ycm_enable_diagnostic_highlighting = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_max_diagnostics_to_display = 100
+
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=1
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
+
 :map <LEADER>ji :YcmCompleter GoToInclude<CR>
 :map <LEADER>jd :YcmCompleter GoToDefinition<CR>
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
 :map <LEADER>b :call g:ClangUpdateQuickFix()<CR>
 
-"let g:clang_library_path = '/usr/lib/llvm-3.8/lib/'
-"let g:clang_user_options = '-Wall -Wextra -Wno-write-strings -std=gnu++11 -D_GLIBCXX_DEBUG'
-"let g:clang_periodic_quickfix=0
-"let g:clang_hl_errors=1
 "autocmd BufWinEnter *.c,*.h,*.cpp,*.hpp :call g:ClangUpdateQuickFix()
 "autocmd BufWritePost *.c,*.h,*.cpp,*.hpp :call g:ClangUpdateQuickFix()
 "autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :map <F5> :call MakeCppTags()<CR>
