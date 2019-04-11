@@ -216,9 +216,12 @@ let g:clang_format#style_options = {
             \ "AlwaysBreakTemplateDeclarations" : "false",
             \ "BreakBeforeBraces" : "Attach",
             \ "ColumnLimit" : 0,
+            \ "CompactNamespaces" : "true",
             \ "ContinuationIndentWidth" : 3,
             \ "Cpp11BracedListStyle" : "true",
+            \ "FixNamespaceComments" : "true",
             \ "IndentWidth" : 3,
+            \ "NamespaceIndentation" : "None",
             \ "Standard" : "C++11"}
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 
@@ -227,7 +230,7 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_always_populate_location_list = 1
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_enable_diagnostic_highlighting = 1
-"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 0
 let g:ycm_max_diagnostics_to_display = 100
 
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=1
@@ -238,7 +241,7 @@ let g:ycm_max_diagnostics_to_display = 100
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
 :map <LEADER>b :call g:ClangUpdateQuickFix()<CR>
 
-"autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :map <F5> :call MakeCppTags()<CR>
+autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :nnoremap <buffer> <F5> :call MakeCppTags()<CR>
 
 "Move to the directory the file is located except if it is a java file
 "autocmd BufEnter !java if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
