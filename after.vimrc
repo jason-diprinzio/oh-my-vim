@@ -17,7 +17,6 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'junegunn/vim-plug'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'mileszs/ack.vim'
@@ -46,10 +45,6 @@ call vundle#end()            " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-"call plug#begin()
-"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-"call plug#end()
 
 :filetype plugin indent on
 
