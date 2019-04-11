@@ -26,6 +26,7 @@ Plugin 'johngrib/vim-game-snake'
 Plugin 'rhysd/vim-clang-format' 
 Plugin 'kana/vim-operator-user'
 Plugin 'rdnetto/YCM-Generator'
+Plugin 'scrooloose/nerdtree'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -76,7 +77,7 @@ call vundle#end()            " required
 "Open this file
 :map vrc :e ~/.oh-my-vim/after.vimrc<CR>
 "Delete current buffer
-:map <C-k> :bwipe!<CR>
+:map <C-k> :bwipe<CR>
 "Next buffer
 :map <C-b> :bn<CR>
 "Previous buffer
@@ -122,7 +123,23 @@ call vundle#end()            " required
 :map <LEADER><F12> :silent %!xmllint --encode UTF-8 --format -<CR>
 :map <LEADER><F11> :silent %!python -m json.tool<CR>
 
-"Java mappings
+"erlang
+autocmd BufRead,BufNewFile *.escript set ft=erlang
+autocmd BufRead,BufNewFile *.proto set ft=proto
+
+let g:erlangCompletionGrep='zgrep'
+let g:erlangManSuffix='erl\.gz'
+
+"ruby
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+"go
+autocmd FileType go setlocal noet
+
+"Java
 "serial version for java serializable
 :map <LEADER>svi :call Insert_svi()<CR>
 :map <LEADER><F8> :call JavaFindMethodInvocationsForIdentifier()<CR>
@@ -141,14 +158,12 @@ function! MakeJavaCtags()
     :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
 endfunction
 
+"eclim
+":map <LEADER>ai :JavaImport<CR>
+":map <LEADER>oi :JavaImportOrganize<CR>
+":map <LEADER>gs :JavaGetSet<CR>
+"eclim mappings
 
-"Eclim mappings
-:map <LEADER>ai :JavaImport<CR>
-:map <LEADER>oi :JavaImportOrganize<CR>
-:map <LEADER>gs :JavaGetSet<CR>
-"Eclim mappings
-
-"Eclim configs
 let g:EclimProjectProblemsUpdateOnBuild=0
 let g:EclimProjectProblemsUpdateOnSave=0
 let g:EclimJavascriptValidate=0
@@ -158,11 +173,17 @@ if !exists(":SS")
     command -nargs=? SS :call SearchCode('<args>')
 endif
 
+"nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
 "Auto save/load file meta
 "autocmd BufWinLeave * mkview
 "autocmd BufWinEnter * silent loadview
 
-"Make all tabs into spaces except for make files only.
+"make
 autocmd Filetype !make retab
 autocmd Filetype make setlocal noet
 
@@ -175,7 +196,7 @@ autocmd FileType go compiler go
 "if we're using ant, then make shit happy
 "autocmd Filetype c,h,cpp,hpp,java set errorformat="\ %#[%.%#]\ %#%f:%l:%v:%*\\d:%*\\d:\ %t%[%^:]%#:%m, \%A\ %#[%.%#]\ %f:%l:\ %m,%-Z\ %#[%.%#]\ %p^,%C\ %#[%.%#]\ %#%m"
 
-"C/C++ specific tags
+"C/C++
 function! MakeCppTags()
     :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
 endfunction
@@ -199,7 +220,7 @@ let g:clang_format#style_options = {
             \ "Cpp11BracedListStyle" : "true",
             \ "IndentWidth" : 3,
             \ "Standard" : "C++11"}
-autocmd Filetype c,h,cpp,hpp :vmap = :ClangFormat<CR>
+autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 
 "ycm settings
 let g:ycm_confirm_extra_conf = 0
@@ -217,18 +238,10 @@ let g:ycm_max_diagnostics_to_display = 100
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
 :map <LEADER>b :call g:ClangUpdateQuickFix()<CR>
 
-"autocmd BufWinEnter *.c,*.h,*.cpp,*.hpp :call g:ClangUpdateQuickFix()
-"autocmd BufWritePost *.c,*.h,*.cpp,*.hpp :call g:ClangUpdateQuickFix()
 "autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :map <F5> :call MakeCppTags()<CR>
-"
+
 "Move to the directory the file is located except if it is a java file
 "autocmd BufEnter !java if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
-"
-"General
-"If .proj file exists load the project plugin on start only.
-if filereadable(".proj")
-    autocmd VimEnter * Project .proj
-endif
 
 "Grab a git patch and display it
 func! ShowPatch()
@@ -537,22 +550,4 @@ if has("autocmd")
 endif
 "end HEX MODE
 
-"vim-erlang
-autocmd BufRead,BufNewFile *.escript set ft=erlang
-autocmd BufRead,BufNewFile *.proto set ft=proto
-
-let g:erlangCompletionGrep='zgrep'
-let g:erlangManSuffix='erl\.gz'
-
-"ruby
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-
-"Conque settings
-let g:ConqueTerm_TERM = 'xterm'
-let g:ConqueTerm_ReadUnfocused = 1
-let g:ConqueTerm_InsertOnEnter = 0
-let g:ConqueTerm_SendVisKey = '<F9>'
 
