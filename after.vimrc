@@ -17,6 +17,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'junegunn/vim-plug'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'mileszs/ack.vim'
@@ -27,6 +28,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/nerdtree'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -44,6 +46,10 @@ call vundle#end()            " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+"call plug#begin()
+"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+"call plug#end()
 
 :filetype plugin indent on
 
@@ -138,6 +144,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 "go
 autocmd FileType go setlocal noet
+let g:go_list_type = "quickfix"
 
 "Java
 "serial version for java serializable
