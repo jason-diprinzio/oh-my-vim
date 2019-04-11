@@ -224,6 +224,7 @@ let g:clang_format#style_options = {
             \ "FixNamespaceComments" : "true",
             \ "IndentWidth" : 3,
             \ "NamespaceIndentation" : "None",
+            \ "SpaceBeforeParens" : "ControlStatements",
             \ "Standard" : "C++11"}
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 
