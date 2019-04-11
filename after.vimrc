@@ -25,6 +25,7 @@ Plugin 'johngrib/vim-game-code-break'
 Plugin 'johngrib/vim-game-snake'
 Plugin 'rhysd/vim-clang-format' 
 Plugin 'kana/vim-operator-user'
+Plugin 'rdnetto/YCM-Generator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -63,8 +64,9 @@ call vundle#end()            " required
 :hi IncSearch guibg=#a4a4a4 ctermbg=27 ctermfg=0
 :color molokai256                       "gvim color scheme
 
-":set cin                               "use C style indentation
-":setlocal cindent cino=j1,(0,ws,Ws
+"indents yo
+:set cin                                "use C style indentation
+:setlocal cindent cino=j1,(0,ws,Ws
 :set fdm=indent
 "improve autocomplete menu color
 :highlight Pmenu cterm=None ctermbg=Blue ctermfg=White guibg=SlateBlue guifg=White
@@ -123,7 +125,6 @@ call vundle#end()            " required
 "Java mappings
 "serial version for java serializable
 :map <LEADER>svi :call Insert_svi()<CR>
-:map <F8> :call JavaSearchFromBufer()<CR>
 :map <LEADER><F8> :call JavaFindMethodInvocationsForIdentifier()<CR>
 :map fd :call JavaFindDerivatives()<CR>
 :map <LEADER><F9> :JavaDocComment<CR>
@@ -139,9 +140,7 @@ autocmd WinEnter !java setlocal cc=-1
 function! MakeJavaCtags()
     :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
 endfunction
-"autocmd FileType java compiler mvn2
-"autocmd FileType java compiler ant
-"autocmd Filetype java set errorformat="\ %#[%.%#]\ %#%f:%l:%v:%*\\d:%*\\d:\ %t%[%^:]%#:%m, \%A\ %#[%.%#]\ %f:%l:\ %m,%-Z\ %#[%.%#]\ %p^,%C\ %#[%.%#]\ %#%m"
+
 
 "Eclim mappings
 :map <LEADER>ai :JavaImport<CR>
@@ -155,9 +154,6 @@ let g:EclimProjectProblemsUpdateOnSave=0
 let g:EclimJavascriptValidate=0
 let g:EclimCompletionMethod = 'omnifunc'
 
-if !exists(":JS")
-    command -nargs=? JS :call JavaSearchText('<args>')
-endif
 if !exists(":SS")
     command -nargs=? SS :call SearchCode('<args>')
 endif
@@ -171,9 +167,13 @@ autocmd Filetype !make retab
 autocmd Filetype make setlocal noet
 
 "Compiler for file types
-autocmd Filetype c,h,c++,hpp compiler gcc
-autocmd Filetype erlang compiler erlang
+"autocmd FileType java compiler mvn2
 autocmd FileType java compiler maven
+autocmd Filetype erlang compiler erlang
+autocmd FileType go compiler go
+"autocmd Filetype c,h,cpp,hpp compiler gcc
+"if we're using ant, then make shit happy
+"autocmd Filetype c,h,cpp,hpp,java set errorformat="\ %#[%.%#]\ %#%f:%l:%v:%*\\d:%*\\d:\ %t%[%^:]%#:%m, \%A\ %#[%.%#]\ %f:%l:\ %m,%-Z\ %#[%.%#]\ %p^,%C\ %#[%.%#]\ %#%m"
 
 "C/C++ specific tags
 function! MakeCppTags()
@@ -193,16 +193,13 @@ let g:clang_format#style_options = {
             \ "AccessModifierOffset" : -3,
             \ "AllowShortIfStatementsOnASingleLine" : "true",
             \ "AlwaysBreakTemplateDeclarations" : "false",
-            \ "BreakBeforeBraces" : "Stroustrup",
+            \ "BreakBeforeBraces" : "Attach",
             \ "ColumnLimit" : 0,
             \ "ContinuationIndentWidth" : 3,
             \ "Cpp11BracedListStyle" : "true",
             \ "IndentWidth" : 3,
             \ "Standard" : "C++11"}
-
-if &filetype ==# 'c' || &filetype ==# 'cpp'
-    :vmap = :ClangFormat<CR>
-endif
+autocmd Filetype c,h,cpp,hpp :vmap = :ClangFormat<CR>
 
 "ycm settings
 let g:ycm_confirm_extra_conf = 0
@@ -315,36 +312,6 @@ func! JavaFindMethodInvocationsForIdentifier()
     unlet l:keyword
 endfunc
 "JavaFindMethodInvocationsForIdentifier
-
-" Search Java files
-func! JavaSearchFromBufer()
-
-    let l:keyword = expand("<cword>")
-    if l:keyword == ""
-        echo "No identifier under cursor"
-        return
-    endif
-
-    call JavaSearchText(l:keyword)
-
-    unlet l:keyword
-endfunction
-" End search Java files
-
-func! JavaSearchText(keyword)
-
-    let l:keyword = a:keyword
-    if l:keyword == ""
-        echo "JavaSearchText requires an argument"
-        return
-    endif
-
-    execute "vimgrep /" . l:keyword . "/jg **/*.java"
-    :botright cwindow
-
-    unlet l:keyword
-endfunction
-"JavaSearchText
 
 " Find derivatives
 func! JavaFindDerivatives()
