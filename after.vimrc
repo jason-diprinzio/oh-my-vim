@@ -23,7 +23,7 @@ Plugin 'mileszs/ack.vim'
 Plugin 'mikelue/vim-maven-plugin'
 Plugin 'johngrib/vim-game-code-break'
 Plugin 'johngrib/vim-game-snake'
-Plugin 'rhysd/vim-clang-format' 
+Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/nerdtree'
@@ -160,6 +160,9 @@ function! MakeJavaCtags()
     :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
 endfunction
 
+"nerd tree
+:nnoremap nt :NERDTreeToggle <CR>
+
 "eclim
 ":map <LEADER>ai :JavaImport<CR>
 ":map <LEADER>oi :JavaImportOrganize<CR>
@@ -200,7 +203,7 @@ autocmd FileType go compiler go
 
 "C/C++
 function! MakeCppTags()
-    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
+    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ ./src ./include target/include
 endfunction
 
 "Make one object from the current file
@@ -240,6 +243,7 @@ let g:ycm_max_diagnostics_to_display = 100
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=1
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
 
+:nnoremap <buffer> fi :YcmCompleter FixIt<CR>
 :map <LEADER>ji :YcmCompleter GoToInclude<CR>
 :map <LEADER>jd :YcmCompleter GoToDefinition<CR>
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
