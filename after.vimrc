@@ -216,19 +216,33 @@ endfunc
 "clang-format settings
 let g:clang_format#code_style='llvm'
 let g:clang_format#style_options = {
-            \ "AccessModifierOffset" : -3,
-            \ "AllowShortIfStatementsOnASingleLine" : "true",
-            \ "AlwaysBreakTemplateDeclarations" : "false",
-            \ "BreakBeforeBraces" : "Attach",
-            \ "ColumnLimit" : 0,
-            \ "CompactNamespaces" : "true",
-            \ "ContinuationIndentWidth" : 3,
-            \ "Cpp11BracedListStyle" : "true",
-            \ "FixNamespaceComments" : "true",
-            \ "IndentWidth" : 3,
-            \ "NamespaceIndentation" : "None",
-            \ "SpaceBeforeParens" : "ControlStatements",
-            \ "Standard" : "C++11"}
+         \ "AccessModifierOffset" : -3,
+         \ "AlignConsecutiveAssignments" : "true",
+         \ "AlignConsecutiveDeclarations" : "true",
+         \ "AlignTrailingComments" : "true",
+         \ "AllowShortIfStatementsOnASingleLine" : "true",
+         \ "AlwaysBreakTemplateDeclarations" : "false",
+         \ "BreakBeforeBraces" : "Attach",
+         \ "ColumnLimit" : 0,
+         \ "CompactNamespaces" : "true",
+         \ "ContinuationIndentWidth" : 3,
+         \ "Cpp11BracedListStyle" : "true",
+         \ "FixNamespaceComments" : "true",
+         \ "IndentWidth" : 3,
+         \ "MacroBlockBegin" : "^ZONOFF_SEDES_BEGIN",
+         \ "MacroBlockEnd" : "^ZONOFF_SEDES_END",
+         \ "MaxEmptyLinesToKeep" : 1,
+         \ "NamespaceIndentation" : "None",
+         \ "PointerAlignment" : "Middle",
+         \ "SortIncludes" : "false",
+         \ "SortUsingDeclarations" : "false", 
+         \ "SpaceBeforeCtorInitializerColon" : "true",
+         \ "SpaceBeforeInheritanceColon" : "true",
+         \ "SpaceBeforeParens" : "ControlStatements",
+         \ "SpacesBeforeTrailingComments" : 3,
+         \ "Standard" : "C++11"}
+\ "AllowAllConstructorInitializersOnNextLine" : "true",
+
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 
 "ycm settings
