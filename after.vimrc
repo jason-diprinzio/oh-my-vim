@@ -218,16 +218,21 @@ let g:clang_format#code_style='llvm'
 let g:clang_format#style_options = {
          \ "AccessModifierOffset" : -3,
          \ "AlignConsecutiveAssignments" : "true",
-         \ "AlignConsecutiveDeclarations" : "true",
+         \ "AlignConsecutiveDeclarations" : "false",
          \ "AlignTrailingComments" : "true",
          \ "AllowShortIfStatementsOnASingleLine" : "true",
          \ "AlwaysBreakTemplateDeclarations" : "false",
          \ "BreakBeforeBraces" : "Attach",
+         \ "BreakConstructorInitializers" : "AfterColon",
+         \ "BreakInheritanceList" : "AfterColon",
          \ "ColumnLimit" : 0,
          \ "CompactNamespaces" : "true",
+         \ "ConstructorInitializerAllOnOneLineOrOnePerLine" : "false",
+         \ "ConstructorInitializerIndentWidth" : 3,
          \ "ContinuationIndentWidth" : 3,
          \ "Cpp11BracedListStyle" : "true",
          \ "FixNamespaceComments" : "true",
+         \ "IndentCaseLabels" : "true",
          \ "IndentWidth" : 3,
          \ "MacroBlockBegin" : "^ZONOFF_SEDES_BEGIN",
          \ "MacroBlockEnd" : "^ZONOFF_SEDES_END",
@@ -236,13 +241,14 @@ let g:clang_format#style_options = {
          \ "PointerAlignment" : "Middle",
          \ "SortIncludes" : "false",
          \ "SortUsingDeclarations" : "false", 
+         \ "SpaceBeforeCpp11BracedList" : "true",
          \ "SpaceBeforeCtorInitializerColon" : "true",
          \ "SpaceBeforeInheritanceColon" : "true",
          \ "SpaceBeforeParens" : "ControlStatements",
          \ "SpacesBeforeTrailingComments" : 3,
          \ "Standard" : "C++11"}
-\ "AllowAllConstructorInitializersOnNextLine" : "true",
-
+"\ "AllowAllConstructorInitializersOnNextLine" : "true",
+"\ "AllowAllConstructorInitializersOnNextLine" : "true",
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 
 "ycm settings
