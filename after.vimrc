@@ -245,6 +245,7 @@ let g:clang_format#style_options = {
          \ "SpaceBeforeCtorInitializerColon" : "true",
          \ "SpaceBeforeInheritanceColon" : "true",
          \ "SpaceBeforeParens" : "ControlStatements",
+         \ "SpaceBeforeRangeBasedForLoopColon" : "true",
          \ "SpacesBeforeTrailingComments" : 3,
          \ "Standard" : "C++11"}
 "\ "AllowAllConstructorInitializersOnNextLine" : "true",
