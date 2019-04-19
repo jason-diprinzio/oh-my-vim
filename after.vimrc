@@ -51,8 +51,8 @@ call vundle#end()            " required
 :syn on                                 "syntax highlighting
 :set noea                               "don't automatically resize windows
 :set expandtab                          "use spaces not tabs
-:set ts=3                               "tab stop.  number of spaces for tabs
-:set shiftwidth=3                       "indent spaces for auto format
+:set ts=4                               "tab stop.  number of spaces for tabs
+:set shiftwidth=4                       "indent spaces for auto format
 :set number                             "line numbers
 :set bg=dark                            "set background color
 :set hlsearch                           "highlight search
@@ -254,6 +254,8 @@ let g:clang_format#style_options = {
 "\ "AllowAllConstructorInitializersOnNextLine" : "true",
 "\ "AllowAllConstructorInitializersOnNextLine" : "true",
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
+autocmd Filetype c,h,cpp,hpp :setlocal ts=3
+autocmd Filetype c,h,cpp,hpp :setlocal shiftwidth=3
 
 "ycm settings
 let g:ycm_confirm_extra_conf = 0
