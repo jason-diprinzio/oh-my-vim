@@ -49,6 +49,7 @@ call vundle#end()            " required
 :filetype plugin indent on
 
 :syn on                                 "syntax highlighting
+:set noea                               "don't automatically resize windows
 :set expandtab                          "use spaces not tabs
 :set ts=3                               "tab stop.  number of spaces for tabs
 :set shiftwidth=3                       "indent spaces for auto format
@@ -79,6 +80,8 @@ call vundle#end()            " required
 :map vrc :e ~/.oh-my-vim/after.vimrc<CR>
 "Delete current buffer
 :map <C-k> :bwipe<CR>
+"Delete current buffer but leave window intact
+:map <LOCALLEADER>q :bp<bar>sp<bar>bn<bar>bd<CR>
 "Next buffer
 :map <C-b> :bn<CR>
 "Previous buffer
