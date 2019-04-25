@@ -24,8 +24,6 @@ Plugin 'mikelue/vim-maven-plugin'
 Plugin 'johngrib/vim-game-code-break'
 Plugin 'johngrib/vim-game-snake'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'kana/vim-operator-user'
-Plugin 'rdnetto/YCM-Generator'
 Plugin 'scrooloose/nerdtree'
 Plugin 'fatih/vim-go'
 
@@ -237,8 +235,8 @@ let g:clang_format#style_options = {
          \ "FixNamespaceComments" : "true",
          \ "IndentCaseLabels" : "true",
          \ "IndentWidth" : 3,
-         \ "MacroBlockBegin" : "^ZONOFF_SEDES_BEGIN",
-         \ "MacroBlockEnd" : "^ZONOFF_SEDES_END",
+         \ "MacroBlockBegin" : "ZONOFF_SEDES_BEGIN|MSG_DEF_BEGIN",
+         \ "MacroBlockEnd" : "ZONOFF_SEDES_END|MSG_DEF_END",
          \ "MaxEmptyLinesToKeep" : 1,
          \ "NamespaceIndentation" : "None",
          \ "PointerAlignment" : "Middle",
