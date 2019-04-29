@@ -264,7 +264,7 @@ let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_autoclose_preview_window_after_insertion = 0
 let g:ycm_max_diagnostics_to_display = 100
 
-:highlight YcmErrorLine guibg=#cf0000 ctermbg=1
+:highlight YcmErrorLine guibg=#cf0000 ctermbg=16
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
 
 :nnoremap <buffer> fi :YcmCompleter FixIt<CR>
