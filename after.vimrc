@@ -271,7 +271,7 @@ let g:ycm_max_diagnostics_to_display = 10
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=16
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
 
-:nnoremap <buffer> fi :YcmCompleter FixIt<CR>
+:nnoremap <buffer> <LOCALLEADER>fi :YcmCompleter FixIt<CR>
 :map <LEADER>ji :YcmCompleter GoToInclude<CR>
 :map <LEADER>jd :YcmCompleter GoToDefinition<CR>
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
