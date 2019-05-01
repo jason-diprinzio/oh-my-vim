@@ -266,7 +266,7 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_autoclose_preview_window_after_insertion = 0
-let g:ycm_max_diagnostics_to_display = 100
+let g:ycm_max_diagnostics_to_display = 10
 
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=16
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
