@@ -57,9 +57,9 @@ call vundle#end()            " required
 :set nocompatible                       "use vim not vi
 :set ai                                 "auto indent
 :set is                                 "inc search
-:set tags+=~/Projects/.jdk_tags         "additional tags
-:hi ColorColumn guibg=#4a4a4a ctermbg=0
+:set tags+=~/.jdk_tags                  "additional tags
 :set colorcolumn=120
+:hi ColorColumn guibg=#4a4a4a ctermbg=0
 :hi CursorLine guibg=#4a4a4a ctermbg=0
 :hi Search guibg=#a4a4a4 ctermbg=27 ctermfg=0
 :hi IncSearch guibg=#a4a4a4 ctermbg=27 ctermfg=0
@@ -69,6 +69,7 @@ call vundle#end()            " required
 :set cin                                "use C style indentation
 :setlocal cindent cino=j1,(0,ws,Ws
 :set fdm=indent
+
 "improve autocomplete menu color
 :highlight Pmenu cterm=None ctermbg=Blue ctermfg=White guibg=SlateBlue guifg=White
 :highlight PmenuSel ctermbg=White ctermfg=Black guibg=SlateGrey guifg=Black
@@ -113,10 +114,8 @@ call vundle#end()            " required
 :map <F3> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
 :map <C-F3> :cn<CR>
 :map <F4> :buffers<CR>
-:map <F5> :!ctags -R --exclude="*.js" <CR>
-:map <A-F5> :make -j10<CR>
-:map <S-F5> :make compile<CR>
-:map <LEADER><F5> :make -DskipTests=true
+:map <F5> :!ctags -R . <CR>
+:map <S-F5> :make -j10<CR>
 :map mf :call MakeFile()<CR>
 :map <F7> :VCSBlame<CR>
 :map <LEADER><F7> :call ShowPatch()<CR>
@@ -124,6 +123,12 @@ call vundle#end()            " required
 :map <F11> :set ignorecase!<CR>
 :map <LEADER><F12> :silent %!xmllint --encode UTF-8 --format -<CR>
 :map <LEADER><F11> :silent %!python -m json.tool<CR>
+
+"Move to the directory the file is located except if it is a java file
+"autocmd BufEnter !java if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
+"Auto save/load file meta
+"autocmd BufWinLeave * mkview
+"autocmd BufWinEnter * silent loadview
 
 "erlang
 autocmd BufRead,BufNewFile *.escript set ft=erlang
@@ -140,6 +145,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 "go
 autocmd FileType go setlocal noet
+autocmd FileType go :nnoremap <buffer> <S-F5> :GoBuild<CR>
 let g:go_list_type = "quickfix"
 
 "Java
@@ -154,22 +160,37 @@ let g:go_list_type = "quickfix"
 :map <LEADER>pn :call PackageName()<CR>
 "Get java build path for maven projects
 :map <S-F10> :r! mvn dependency:build-classpath \| grep m2 \| tr ':' '\n' \| sort \| uniq \| tr '\n' ':'<CR>
+
+function! MakeJavaCtags()
+    :!ctags -R --languages=Java -f ~/.jdk_tags /usr/lib/jvm/java-8-oracle/src /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/src
+endfunction
+autocmd BufNewFile,BufRead,BufEnter *.java,pom.xml :nnoremap <buffer> <F5> :call MakeJavaCtags()<CR>
+
+autocmd FileType java :nnoremap <buffer> <S-F5> :make -DskipTests=true<CR>
 autocmd FileType java setlocal cc=120
 autocmd WinEnter !java setlocal cc=-1
-"Java specific tags
-function! MakeJavaCtags()
-    :!ctags -R --languages=Java -f ~/Projects/.jdk_tags /usr/lib/jvm/java-8-oracle/src
-endfunction
+"Java
 
-"nerd tree
-:nnoremap nt :NERDTreeToggle <CR>
+"C/c++
+function! MakeCppTags()
+    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ ./src ./include target/include/amd64
+endfunction
+autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :nnoremap <buffer> <F5> :call MakeCppTags()<CR>
+
+"Make one object from the current file
+function! MakeFile()
+    let l:file = fnamemodify(expand('%'), ':r') . ".o"
+    :exec "make " . l:file
+    unlet l:file
+endfunc
+"C/c++
+
+""""""""""""" PLUGINS
 
 "eclim
 ":map <LEADER>ai :JavaImport<CR>
 ":map <LEADER>oi :JavaImportOrganize<CR>
 ":map <LEADER>gs :JavaGetSet<CR>
-"eclim mappings
-
 let g:EclimProjectProblemsUpdateOnBuild=0
 let g:EclimProjectProblemsUpdateOnSave=0
 let g:EclimJavascriptValidate=0
@@ -178,22 +199,17 @@ let g:EclimCompletionMethod = 'omnifunc'
 if !exists(":SS")
     command -nargs=? SS :call SearchCode('<args>')
 endif
+"eclim 
 
-"nerdtree
+"nerd tree
+:nnoremap nt :NERDTreeToggle <CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+"nerd tree
 
-"Auto save/load file meta
-"autocmd BufWinLeave * mkview
-"autocmd BufWinEnter * silent loadview
-
-"make
-autocmd Filetype !make retab
-autocmd Filetype make setlocal noet
-
-"Compiler for file types
+"Compilers
 "autocmd FileType java compiler mvn2
 autocmd FileType java compiler maven
 autocmd Filetype erlang compiler erlang
@@ -201,18 +217,6 @@ autocmd FileType go compiler go
 "autocmd Filetype c,h,cpp,hpp compiler gcc
 "if we're using ant, then make shit happy
 "autocmd Filetype c,h,cpp,hpp,java set errorformat="\ %#[%.%#]\ %#%f:%l:%v:%*\\d:%*\\d:\ %t%[%^:]%#:%m, \%A\ %#[%.%#]\ %f:%l:\ %m,%-Z\ %#[%.%#]\ %p^,%C\ %#[%.%#]\ %#%m"
-
-"C/C++
-function! MakeCppTags()
-    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ ./src ./include target/include
-endfunction
-
-"Make one object from the current file
-function! MakeFile()
-    let l:file = fnamemodify(expand('%'), ':r') . ".o"
-    :exec "make " . l:file
-    unlet l:file
-endfunc
 
 "clang-format settings
 let g:clang_format#code_style='llvm'
@@ -273,10 +277,7 @@ let g:ycm_max_diagnostics_to_display = 100
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
 :map <LEADER>b :call g:ClangUpdateQuickFix()<CR>
 
-autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :nnoremap <buffer> <F5> :call MakeCppTags()<CR>
-
-"Move to the directory the file is located except if it is a java file
-"autocmd BufEnter !java if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
+""""""""""""" PLUGINS
 
 "Grab a git patch and display it
 func! ShowPatch()
