@@ -173,7 +173,7 @@ autocmd WinEnter !java setlocal cc=-1
 
 "C/c++
 function! MakeCppTags()
-    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ ./src ./include target/include/amd64
+    :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
 endfunction
 autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :nnoremap <buffer> <F5> :call MakeCppTags()<CR>
 
