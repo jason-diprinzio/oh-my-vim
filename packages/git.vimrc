@@ -29,7 +29,7 @@ nnoremap <Leader>go :Gread<CR>
 nnoremap <Leader>gR :Gremove<CR>
 nnoremap <Leader>gm :Gmove<Space>
 nnoremap <Leader>gc :Gcommit<CR>
-nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gd :Gdiffsplit<CR>
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gB :Gbrowse<CR>
 nnoremap <Leader>gp :Git! push<CR>
