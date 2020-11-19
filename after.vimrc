@@ -145,7 +145,7 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 "go
 autocmd FileType go setlocal noet
-autocmd FileType go :nnoremap <buffer> <S-F5> :GoBuild<CR>
+autocmd FileType go :noremap <buffer> <S-F5> :GoBuild<CR>
 let g:go_list_type = "quickfix"
 
 "Java
@@ -164,9 +164,9 @@ let g:go_list_type = "quickfix"
 function! MakeJavaCtags()
     :!ctags -R --languages=Java -f ~/.jdk_tags /usr/lib/jvm/java-8-oracle/src /Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home/src
 endfunction
-autocmd BufNewFile,BufRead,BufEnter *.java,pom.xml :nnoremap <buffer> <F5> :call MakeJavaCtags()<CR>
+autocmd BufNewFile,BufRead,BufEnter *.java,pom.xml :noremap <buffer> <F5> :call MakeJavaCtags()<CR>
 
-autocmd FileType java :nnoremap <buffer> <S-F5> :make -DskipTests=true<CR>
+autocmd FileType java :noremap <buffer> <S-F5> :make -DskipTests=true<CR>
 autocmd FileType java setlocal cc=120
 autocmd WinEnter !java setlocal cc=-1
 "Java
@@ -175,7 +175,7 @@ autocmd WinEnter !java setlocal cc=-1
 function! MakeCppTags()
     :!ctags -R --languages=C,C++,Lua --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ .
 endfunction
-autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :nnoremap <buffer> <F5> :call MakeCppTags()<CR>
+autocmd BufNewFile,BufRead,BufEnter *.c,*.h,*.cpp,*.hpp :noremap <buffer> <F5> :call MakeCppTags()<CR>
 
 "Make one object from the current file
 function! MakeFile()
@@ -202,7 +202,7 @@ endif
 "eclim 
 
 "nerd tree
-:nnoremap nt :NERDTreeToggle <CR>
+:noremap nt :NERDTreeToggle <CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -221,7 +221,7 @@ autocmd FileType go compiler go
 "clang-format settings
 let g:clang_format#code_style='llvm'
 let g:clang_format#style_options = {
-         \ "AccessModifierOffset" : -3,
+         \ "AccessModifierOffset" : -4,
          \ "AlignConsecutiveAssignments" : "true",
          \ "AlignConsecutiveDeclarations" : "false",
          \ "AlignTrailingComments" : "true",
@@ -233,12 +233,12 @@ let g:clang_format#style_options = {
          \ "ColumnLimit" : 0,
          \ "CompactNamespaces" : "true",
          \ "ConstructorInitializerAllOnOneLineOrOnePerLine" : "false",
-         \ "ConstructorInitializerIndentWidth" : 3,
-         \ "ContinuationIndentWidth" : 3,
+         \ "ConstructorInitializerIndentWidth" : 4,
+         \ "ContinuationIndentWidth" : 4,
          \ "Cpp11BracedListStyle" : "true",
          \ "FixNamespaceComments" : "true",
          \ "IndentCaseLabels" : "true",
-         \ "IndentWidth" : 3,
+         \ "IndentWidth" : 4,
          \ "MacroBlockBegin" : "ZONOFF_SEDES_BEGIN|MSG_DEF_BEGIN",
          \ "MacroBlockEnd" : "ZONOFF_SEDES_END|MSG_DEF_END",
          \ "MaxEmptyLinesToKeep" : 1,
@@ -251,13 +251,13 @@ let g:clang_format#style_options = {
          \ "SpaceBeforeInheritanceColon" : "true",
          \ "SpaceBeforeParens" : "ControlStatements",
          \ "SpaceBeforeRangeBasedForLoopColon" : "true",
-         \ "SpacesBeforeTrailingComments" : 3,
+         \ "SpacesBeforeTrailingComments" : 4,
          \ "Standard" : "C++11"}
 "\ "AllowAllConstructorInitializersOnNextLine" : "true",
 "\ "AllowAllConstructorInitializersOnNextLine" : "true",
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
-autocmd Filetype c,h,cpp,hpp :setlocal ts=3
-autocmd Filetype c,h,cpp,hpp :setlocal shiftwidth=3
+autocmd Filetype c,h,cpp,hpp :setlocal ts=4
+autocmd Filetype c,h,cpp,hpp :setlocal shiftwidth=4
 
 "ycm settings
 let g:ycm_confirm_extra_conf = 0
@@ -271,7 +271,7 @@ let g:ycm_max_diagnostics_to_display = 10
 :highlight YcmErrorLine guibg=#cf0000 ctermbg=16
 :highlight YcmWarningLine guibg=#cfcf00 ctermbg=130
 
-:nnoremap <buffer> <LOCALLEADER>fi :YcmCompleter FixIt<CR>
+:noremap <buffer> <LOCALLEADER>fi :YcmCompleter FixIt<CR>
 :map <LEADER>ji :YcmCompleter GoToInclude<CR>
 :map <LEADER>jd :YcmCompleter GoToDefinition<CR>
 :map <LEADER>jc :YcmCompleter GoToDeclaration<CR>
@@ -493,7 +493,7 @@ endfunction
 " HEX MODE
 " ex command for toggling hex mode - define mapping if desired
 command! -bar Hexmode call ToggleHex()
-nnoremap <C-H> :Hexmode<CR>
+noremap <C-H> :Hexmode<CR>
 inoremap <C-H> <Esc>:Hexmode<CR>
 vnoremap <C-H> :<C-U>Hexmode<CR>
 
