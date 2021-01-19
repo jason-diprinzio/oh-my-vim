@@ -224,6 +224,7 @@ let g:clang_format#style_options = {
          \ "AccessModifierOffset" : -4,
          \ "AlignConsecutiveAssignments" : "true",
          \ "AlignConsecutiveDeclarations" : "false",
+        \ "AllowAllConstructorInitializersOnNextLine" : "true",
          \ "AlignTrailingComments" : "true",
          \ "AllowShortIfStatementsOnASingleLine" : "true",
          \ "AlwaysBreakTemplateDeclarations" : "false",
@@ -253,8 +254,6 @@ let g:clang_format#style_options = {
          \ "SpaceBeforeRangeBasedForLoopColon" : "true",
          \ "SpacesBeforeTrailingComments" : 4,
          \ "Standard" : "C++11"}
-"\ "AllowAllConstructorInitializersOnNextLine" : "true",
-"\ "AllowAllConstructorInitializersOnNextLine" : "true",
 autocmd Filetype c,h,cpp,hpp :vnoremap <buffer> = :ClangFormat<CR>
 autocmd Filetype c,h,cpp,hpp :setlocal ts=4
 autocmd Filetype c,h,cpp,hpp :setlocal shiftwidth=4
